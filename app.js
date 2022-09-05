@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose') // 載入 mongoose
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+mongoose.connect(process.env.MONGODB_RESTAURANT_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 // 取得資料庫連線狀態
 const db = mongoose.connection
 // 連線異常
@@ -16,7 +16,7 @@ db.once('open', () => {
 })
 // require express-handlebars here
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
+const restaurantList = require('//restaurant.json')
 // setting template engine
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
