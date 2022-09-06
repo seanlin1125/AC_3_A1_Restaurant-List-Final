@@ -56,8 +56,8 @@ app.post('/restaurants', (req, res) => {
     .catch(error => console.log(error))
 })
 // 瀏覽特定資料 show page
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const id = req.params.restaurant_id
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
   return Restaurant.findById(id)
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
@@ -74,6 +74,42 @@ app.get('/search', (req, res) => {
       })
       res.render('index', { restaurants: restaurantsSearch, keyword: keyword })
     })
+    .catch(error => console.log(error))
+})
+// 修改資料
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name       // 從 req.body 拿出表單裡的 name 資料
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const google_map = req.body.google_map
+  const rating = req.body.rating
+  const description = req.body.description
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = name
+      restaurant.name_en = name_en
+      restaurant.category = category
+      restaurant.image = image
+      restaurant.location = location
+      restaurant.phone = phone
+      restaurant.google_map = google_map
+      restaurant.rating = rating
+      restaurant.description = description
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
 })
 // start and listen on the Express server
