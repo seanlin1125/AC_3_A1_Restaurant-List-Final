@@ -4,7 +4,8 @@ const app = express()
 const port = 3000
 // require express-handlebars here
 const exphbs = require('express-handlebars')
-const mongoose = require('mongoose') // 載入 mongoose
+// 載入 mongoose
+const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_RESTAURANT_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 const bodyParser = require('body-parser')
 // 取得資料庫連線狀態
@@ -19,9 +20,6 @@ db.once('open', () => {
 })
 
 const Restaurant = require('./models/restaurant') // 載入 restaurant model
-// const restaurant = require('./models/restaurant')
-
-// const restaurantList = require('./models/seeds/restaurant.json')
 // setting template engine
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
@@ -76,7 +74,7 @@ app.get('/search', (req, res) => {
     })
     .catch(error => console.log(error))
 })
-// 修改資料
+// edit page
 app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -84,7 +82,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
 })
-
+// 修改資料
 app.post('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   const name = req.body.name       // 從 req.body 拿出表單裡的 name 資料
@@ -110,6 +108,14 @@ app.post('/restaurants/:id/edit', (req, res) => {
       return restaurant.save()
     })
     .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
+// 刪除資料
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then((restaurant) => restaurant.remove())
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 // start and listen on the Express server
