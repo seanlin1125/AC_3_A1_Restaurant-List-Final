@@ -6,7 +6,7 @@ const port = 3000
 const exphbs = require('express-handlebars')
 // 載入 mongoose
 const mongoose = require('mongoose')
-mongoose.connect(process.env.MONGODB_RESTAURANT_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+mongoose.connect("mongodb://localhost/restaurant-list", { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
 const bodyParser = require('body-parser')
 // 取得資料庫連線狀態
 const db = mongoose.connection
