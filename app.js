@@ -19,6 +19,7 @@ db.once('open', () => {
 })
 
 const Restaurant = require('./models/restaurant') // 載入 restaurant model
+// const restaurant = require('./models/restaurant')
 
 // const restaurantList = require('./models/seeds/restaurant.json')
 // setting template engine
@@ -62,18 +63,18 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
     .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => console.log(error))
 })
-// 
-// app.get('/restaurants/:restaurant_id', (req, res) => {
-//   const restaurant = restaurantList.results.find((restaurant) => restaurant.id.toString() === req.params.restaurant_id)
-//   res.render('show', { restaurant })
-// })
 // search
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase()
-  const restaurantsSearch = restaurantList.results.filter((restaurant) => {
-    return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.includes(keyword)
-  })
-  res.render('index', { restaurants: restaurantsSearch, keyword: keyword })
+  return Restaurant.find()
+    .lean()
+    .then((restaurant) => {
+      const restaurantsSearch = restaurant.filter((data) => {
+        return data.name.toLowerCase().includes(keyword) || data.category.includes(keyword)
+      })
+      res.render('index', { restaurants: restaurantsSearch, keyword: keyword })
+    })
+    .catch(error => console.log(error))
 })
 // start and listen on the Express server
 app.listen(port, () => {
