@@ -54,11 +54,19 @@ app.post('/restaurants', (req, res) => {
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => console.log(error))
 })
-// show page
+// 瀏覽特定資料 show page
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find((restaurant) => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
+  const id = req.params.restaurant_id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
+// 
+// app.get('/restaurants/:restaurant_id', (req, res) => {
+//   const restaurant = restaurantList.results.find((restaurant) => restaurant.id.toString() === req.params.restaurant_id)
+//   res.render('show', { restaurant })
+// })
 // search
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase()
