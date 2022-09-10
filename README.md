@@ -19,7 +19,7 @@
 + 使用者可以透過搜尋餐廳名稱來找到特定的餐廳
 + 使用者可以透過搜尋餐廳類別來找到特定的餐廳
 ## 畫面
-![](https://github.com/seanlin1125/AC_2-3_A1_Restaurant-List/blob/main/image/A8首頁.png)
+![](https://github.com/seanlin1125/AC_2-3_A8_Restaurant-List/blob/main/image/A8%E9%A6%96%E9%A0%81.png)
 ![](https://github.com/seanlin1125/AC_2-3_A1_Restaurant-List/blob/main/image/restaurant-list_restaurantInfo.png)
 ## 安裝
 1. 複製專案，在終端機輸入：
