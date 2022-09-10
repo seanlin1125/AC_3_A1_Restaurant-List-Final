@@ -9,7 +9,10 @@ router.get('/', (req, res) => {
     .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
     .sort({ name: 'asc' })
     .then(restaurants => res.render('index', { restaurants })) // 將資料傳給 index 樣板
-    .catch(error => console.error(error)) // 錯誤處理
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 // 匯出路由模組
 module.exports = router

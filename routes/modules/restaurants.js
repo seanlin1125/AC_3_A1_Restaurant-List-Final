@@ -18,7 +18,10 @@ router.get('/:id/restaurants/new', (req, res) => {
 router.post('/', (req, res) => {
   return Restaurant.create(req.body)     // 存入資料庫
     .then(() => res.redirect('/')) // 新增完成後導回首頁
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 // 瀏覽特定資料 show page
 router.get('/:id', (req, res) => {
@@ -26,7 +29,10 @@ router.get('/:id', (req, res) => {
   return Restaurant.findById(id)
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 // search
 router.get('/search', (req, res) => {
@@ -39,7 +45,10 @@ router.get('/search', (req, res) => {
       })
       res.render('index', { restaurants: restaurantsSearch, keyword: keyword })
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 // edit page
 router.get('/:id/edit', (req, res) => {
@@ -47,14 +56,20 @@ router.get('/:id/edit', (req, res) => {
   return Restaurant.findById(id)
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 // 修改資料
 router.put('/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findByIdAndUpdate(id, req.body)
     .then(() => res.redirect(`/restaurants/${id}`))
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 // 刪除資料
 router.delete('/:id', (req, res) => {
@@ -62,6 +77,9 @@ router.delete('/:id', (req, res) => {
   return Restaurant.findById(id)
     .then((restaurant) => restaurant.remove())
     .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      res.render('error', { error: error.message })
+    }) // 錯誤處理
 })
 module.exports = router
