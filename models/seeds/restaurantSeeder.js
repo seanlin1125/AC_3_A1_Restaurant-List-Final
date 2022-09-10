@@ -9,6 +9,7 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
   Restaurant.create(restaurantList.results)
-    .then(console.log('seeds imported!')) 
+    .then(console.log('seeds imported!'))
     .catch(error => console.error(error)) // 錯誤處理
+    .finally(() => db.close())
 })
