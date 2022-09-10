@@ -7,7 +7,7 @@ db.once('open', () => {
     .then(console.log('seeds imported!'))
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
     .finally(() => db.close())
 })

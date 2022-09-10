@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
     .then(() => res.redirect('/')) // 新增完成後導回首頁
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
 })
 // 瀏覽特定資料 show page
@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
     .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
 })
 // search
@@ -41,7 +41,7 @@ router.get('/search', (req, res) => {
     })
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
 })
 // edit page
@@ -52,7 +52,7 @@ router.get('/:id/edit', (req, res) => {
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
 })
 // 修改資料
@@ -62,7 +62,7 @@ router.put('/:id', (req, res) => {
     .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
 })
 // 刪除資料
@@ -73,7 +73,7 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => {
       console.log(error)
-      res.render('error', { error: error.message })
+      res.render('error')
     }) // 錯誤處理
 })
 module.exports = router
