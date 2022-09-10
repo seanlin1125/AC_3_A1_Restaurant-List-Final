@@ -8,12 +8,6 @@ const Restaurant = require('../../models/restaurant')
 router.get('/new', (req, res) => {
   return res.render('new')
 })
-router.get('/restaurants/new', (req, res) => {
-  return res.render('new')
-})
-router.get('/:id/restaurants/new', (req, res) => {
-  return res.render('new')
-})
 // Create data
 router.post('/', (req, res) => {
   return Restaurant.create(req.body)     // 存入資料庫
