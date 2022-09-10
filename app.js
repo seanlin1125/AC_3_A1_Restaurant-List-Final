@@ -4,6 +4,8 @@ const app = express()
 const port = 3000
 // require express-handlebars here
 const exphbs = require('express-handlebars')
+
+const methodOverride = require('method-override')
 // 載入 mongoose
 const mongoose = require('mongoose')
 mongoose.connect("mongodb://localhost/restaurant-list", { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
@@ -27,6 +29,8 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 // bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(methodOverride('_method'))
 // routes setting
 app.get('/', (req, res) => {
   Restaurant.find() // 取出 Restaurant model 裡的所有資料
@@ -84,7 +88,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 // 修改資料
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const name = req.body.name       // 從 req.body 拿出表單裡的 name 資料
   const name_en = req.body.name_en
@@ -112,7 +116,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 // 刪除資料
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then((restaurant) => restaurant.remove())
