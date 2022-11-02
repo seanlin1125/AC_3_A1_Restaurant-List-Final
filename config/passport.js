@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const User = require('../models/user')
 module.exports = (app) => {
   // 初始化 Passport 模組
   app.use(passport.initialize())
@@ -8,7 +9,7 @@ module.exports = (app) => {
   passport.use(new LocalStrategy({
     usernameField: 'email',
     passReqToCallback: true,
-  }, (req, username, password, done) => {
+  }, (req, email, password, done) => {
     User.findOne({ email })
       .then((user) => {
         if (!user) {
@@ -28,7 +29,7 @@ module.exports = (app) => {
   passport.deserializeUser((id, done) => {
     User.findById(id)
       .lean()
-      .then((user) => done(err, user))
+      .then((user) => done(null, user))
       .catch((err) => done(err, null))
   });
 }
