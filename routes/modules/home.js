@@ -5,8 +5,9 @@ const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 // 定義首頁路由
 router.get('/', (req, res) => {
-  Restaurant.find() // 取出 Restaurant model 裡的所有資料
-    .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
+  const userId = req.user._id
+  Restaurant.find({ userId })
+    .lean()
     .sort({ name: 'asc' })
     .then(restaurants => res.render('index', { restaurants })) // 將資料傳給 index 樣板
     .catch(error => {
@@ -16,8 +17,9 @@ router.get('/', (req, res) => {
 })
 // search
 router.get('/search', (req, res) => {
+  const userId = req.user._id
   const keyword = req.query.keyword.trim().toLowerCase()
-  return Restaurant.find()
+  return Restaurant.find({ userId })
     .lean()
     .then((restaurant) => {
       const restaurantsSearch = restaurant.filter((data) => {
