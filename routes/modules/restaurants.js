@@ -12,10 +12,10 @@ router.get('/new', (req, res) => {
 router.post('/', (req, res) => {
   const userId = req.user._id
   req.body.userId = userId
-  return Restaurant.create(req.body)     // 存入資料庫
-    .then(() => res.redirect('/')) // 新增完成後導回首頁
+  return Restaurant.create(req.body)  
+    .then(() => res.redirect('/')) 
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     }) // 錯誤處理
 })
@@ -27,7 +27,7 @@ router.get('/:id', (req, res) => {
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     }) // 錯誤處理
 })
@@ -40,7 +40,7 @@ router.get('/:id/edit', (req, res) => {
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     }) // 錯誤處理
 })
@@ -51,7 +51,7 @@ router.put('/:id', (req, res) => {
   return Restaurant.findOneAndUpdate({ _id, userId }, req.body)
     .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     }) // 錯誤處理
 })
@@ -63,7 +63,7 @@ router.delete('/:id', (req, res) => {
     .then((restaurant) => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     }) // 錯誤處理
 })

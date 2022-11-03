@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     .sort({ name: 'asc' })
     .then(restaurants => res.render('index', { restaurants })) // 將資料傳給 index 樣板
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error', { error: error.message })
     }) // 錯誤處理
 })
@@ -28,7 +28,7 @@ router.get('/search', (req, res) => {
       res.render('index', { restaurants: restaurantsSearch, keyword: keyword })
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     }) // 錯誤處理
 })

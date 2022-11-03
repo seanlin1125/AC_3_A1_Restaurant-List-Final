@@ -59,7 +59,7 @@ router.post('/register', (req, res) => {
         .catch((err) => console.error(err))
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
       res.render('error')
     })
 })
