@@ -1,5 +1,6 @@
 // 載入 mongoose
 const mongoose = require('mongoose')
+
 mongoose.connect('mongodb://localhost/restaurant-list-final', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }) // 設定連線到 mongoDB
 // 取得資料庫連線狀態
 const db = mongoose.connection

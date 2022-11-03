@@ -55,10 +55,8 @@ router.post('/register', (req, res) => {
           email,
           password: hash
         }))
-
         .then(() => res.redirect('/'))
         .catch((err) => console.error(err))
-
     })
     .catch((error) => {
       console.log(error)
